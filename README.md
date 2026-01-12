@@ -44,6 +44,7 @@ Example `.env`:
 MONGODB_URI=mongodb://localhost:27017/guards
 KAFKA_BROKERS=localhost:9092
 PORT=3000
+URL_FETCHER_CONSUMER_GROUP=url-fetcher-consumer
 ```
 
 #### Running the Backend
