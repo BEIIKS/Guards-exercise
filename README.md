@@ -57,7 +57,7 @@ You need to run both applications in separate terminals:
 npm run start:dev urls-api-gateway
 ```
 
-*Terminal 2 - Microservice:*
+*Terminal 2 - Url-Fetcher Microservice:*
 ```bash
 npm run start:dev url-fetcher
 ```
