@@ -134,7 +134,7 @@ npm run preview
 For this assignment, I chose an approach where once the client submits a URL, the content and status do not change unless the client explicitly requests an update.
 The client can submit the same URL again, which will trigger an update and refresh the last_updated timestamp.
 
-In addition, here are several improvements I would have implemented if I had more time:
+In addition, here are several improvements I would have implemented if I had more time please note there are more bur I chose to focus on the most important ones imo:
 
 1. Content type detection – Identify whether the response content is plain text that can be displayed directly, or HTML returned from a web page.
 If the content is HTML, I would add an IFrame component on the frontend that would be displayed when the user wants to view the content.
@@ -147,6 +147,4 @@ This is, of course, a product decision, but to handle cases where a message migh
 
 4. Proper Logging – Implement a structured logging system (e.g., Winston or Pino) to ensure better observability and debugging capabilities in production.
 
-5. Database Abstraction – Abstract the database layer further (repository pattern) to decouple the business logic from the specific database implementation, allowing for easier switching between databases (e.g., from MongoDB to PostgreSQL).
-
-those things above is just some of the improvements I would have implemented if I had more time.
+5. Database Abstraction – Abstract the database layer further (repository pattern) to decouple the business logic from the specific database implementation, allowing for easier switching between databases (e.g., from MongoDB to PostgreSQL) as I do in the messaging - kafka libs.

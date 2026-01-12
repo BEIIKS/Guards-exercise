@@ -36,7 +36,6 @@ describe('UrlFetcherController', () => {
     it('should process url if key is present', async () => {
       const payload = { url: 'http://test.com' };
 
-      // Mock Kafka Message with Key
       (mockContext.getMessage as jest.Mock).mockReturnValue({
         key: Buffer.from('mongoId'),
         value: payload,
@@ -53,7 +52,6 @@ describe('UrlFetcherController', () => {
     it('should not process if key is missing', async () => {
       const payload = { url: 'http://test.com' };
 
-      // Mock Kafka Message without Key
       (mockContext.getMessage as jest.Mock).mockReturnValue({
         key: null,
         value: payload,

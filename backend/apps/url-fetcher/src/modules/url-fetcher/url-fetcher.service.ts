@@ -27,11 +27,13 @@ export class UrlFetcherService {
   }
 
   private castToString(data: any): string {
-    if (typeof data === 'string') return data;
+    if (typeof data === 'string')
+      return data;
 
     try {
       const result = JSON.stringify(data);
-      if (result === undefined) return String(data);
+      if (result === undefined)
+        return String(data);
       return result;
     } catch {
       return String(data);

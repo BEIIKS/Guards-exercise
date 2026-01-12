@@ -20,7 +20,6 @@ describe('UrlsApiGatewayService', () => {
     emitMany: jest.fn(),
   };
 
-  // Helper to mock chainable Mongoose queries (method -> select -> exec)
   const mockQueryChain = (method: jest.Mock, result: any) => {
     method.mockReturnValue({
       select: jest.fn().mockReturnValue({
@@ -59,31 +58,22 @@ describe('UrlsApiGatewayService', () => {
     it('should split new and existing URLs and emit events for all', async () => {
       const inputDto = {
         urls: ['http://new.com', 'http://old.com', 'http://new.com'],
-      }; // Duplicate in input
+      };
 
       const existingDoc = { _id: 'old_id', url: 'http://old.com' };
       const newDoc = { _id: 'new_id', url: 'http://new.com' };
 
-      // Mock Setup
-      // 1. find returns existing
       mockQueryChain(mockUrlModel.find, [existingDoc]);
-
-      // 2. insertMany returns new
       mockUrlModel.insertMany.mockResolvedValue([newDoc]);
 
       await service.handleUrlsSubmit(inputDto);
-
-      // Verify deduplication and separation
       expect(mockUrlModel.find).toHaveBeenCalledWith({
         url: { $in: ['http://new.com', 'http://old.com'] },
       });
 
-      // Verify insertion of strictly new URL
       expect(mockUrlModel.insertMany).toHaveBeenCalledWith([
         { url: 'http://new.com' },
       ]);
-
-      // Verify emission includes both (allUnique)
       expect(messagingService.emitMany).toHaveBeenCalledWith(TOPICS.URL_FETCH, [
         { key: 'old_id', value: { url: 'http://old.com' } },
         { key: 'new_id', value: { url: 'http://new.com' } },

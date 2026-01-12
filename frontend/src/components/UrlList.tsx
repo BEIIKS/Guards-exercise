@@ -21,7 +21,7 @@ export const UrlList: React.FC<Props> = ({ onViewContent, refreshTrigger }) => {
 
   useEffect(() => {
     fetchUrls();
-    const interval = setInterval(fetchUrls, 2000); // Poll every 2 seconds
+    const interval = setInterval(fetchUrls, 2000);
     return () => clearInterval(interval);
   }, [refreshTrigger]);
 
