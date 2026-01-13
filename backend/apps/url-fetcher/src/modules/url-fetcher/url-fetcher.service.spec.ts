@@ -70,5 +70,24 @@ describe('UrlFetcherService', () => {
         }),
       );
     });
+
+    it('should handle database error during update', async () => {
+      const url = 'http://test.com';
+      const id = 'mongoId';
+      const content = '<html>data</html>';
+
+      mockedAxios.get.mockResolvedValue({ data: content });
+      mockUrlModel.findByIdAndUpdate.mockRejectedValueOnce(new Error('DB Error'));
+
+      const consoleSpy = jest.spyOn(console, 'error').mockImplementation();
+
+      await service.processUrl(id, url);
+
+      expect(consoleSpy).toHaveBeenCalledWith(
+        `Failed to process URL: ${url}`,
+        'DB Error',
+      );
+      consoleSpy.mockRestore();
+    });
   });
 });

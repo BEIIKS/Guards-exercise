@@ -40,7 +40,7 @@ describe('UrlsApiGatewayController', () => {
       const result = await controller.fetchUrl(dto);
 
       expect(service.handleUrlsSubmit).toHaveBeenCalledWith(dto);
-      expect(result).toEqual({ status: 'request_sent', urls: dto.urls });
+      expect(result).toEqual(dto.urls);
     });
   });
 

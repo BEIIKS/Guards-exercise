@@ -55,9 +55,43 @@ describe('UrlsApiGatewayService', () => {
   });
 
   describe('handleUrlsSubmit', () => {
-    it('should split new and existing URLs and emit events for all', async () => {
+    it('should insert all new URLs', async () => {
+      const inputDto = { urls: ['http://new1.com', 'http://new2.com'] };
+      mockQueryChain(mockUrlModel.find, []);
+      mockUrlModel.insertMany.mockResolvedValue([
+        { _id: '1', url: 'http://new1.com' },
+        { _id: '2', url: 'http://new2.com' },
+      ]);
+
+      await service.handleUrlsSubmit(inputDto);
+
+      expect(mockUrlModel.insertMany).toHaveBeenCalledWith([
+        { url: 'http://new1.com' },
+        { url: 'http://new2.com' },
+      ]);
+      expect(messagingService.emitMany).toHaveBeenCalledWith(TOPICS.URL_FETCH, [
+        { key: '1', value: { url: 'http://new1.com' } },
+        { key: '2', value: { url: 'http://new2.com' } },
+      ]);
+    });
+
+    it('should defined existing URLs and not insert them', async () => {
+      const inputDto = { urls: ['http://existing.com'] };
+      mockQueryChain(mockUrlModel.find, [
+        { _id: '1', url: 'http://existing.com' },
+      ]);
+
+      await service.handleUrlsSubmit(inputDto);
+
+      expect(mockUrlModel.insertMany).not.toHaveBeenCalled();
+      expect(messagingService.emitMany).toHaveBeenCalledWith(TOPICS.URL_FETCH, [
+        { key: '1', value: { url: 'http://existing.com' } },
+      ]);
+    });
+
+    it('should handle mixed new and existing URLs', async () => {
       const inputDto = {
-        urls: ['http://new.com', 'http://old.com', 'http://new.com'],
+        urls: ['http://new.com', 'http://old.com'],
       };
 
       const existingDoc = { _id: 'old_id', url: 'http://old.com' };
@@ -67,9 +101,6 @@ describe('UrlsApiGatewayService', () => {
       mockUrlModel.insertMany.mockResolvedValue([newDoc]);
 
       await service.handleUrlsSubmit(inputDto);
-      expect(mockUrlModel.find).toHaveBeenCalledWith({
-        url: { $in: ['http://new.com', 'http://old.com'] },
-      });
 
       expect(mockUrlModel.insertMany).toHaveBeenCalledWith([
         { url: 'http://new.com' },

@@ -135,7 +135,8 @@ npm run preview
 For this assignment, I chose an approach where once the client submits a URL, the content and status do not change unless the client explicitly requests an update.
 The client can submit the same URL again, which will trigger an update and refresh the last_updated timestamp.
 
-In addition, here are several improvements I would have implemented if I had more time please note there are more bur I chose to focus on the most important ones imo:
+In addition, here are several improvements I would have implemented if I had more time.
+Please note there are obviously more but I choose to focus on the most important ones imo:
 
 1. Content type detection – Identify whether the response content is plain text that can be displayed directly, or HTML returned from a web page.
 If the content is HTML, I would add an IFrame component on the frontend that would be displayed when the user wants to view the content.
