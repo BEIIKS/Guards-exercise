@@ -81,6 +81,10 @@ npm run start:prod urls-api-gateway
 npm run start:prod url-fetcher
 ```
 
+#### API Documentation (Swagger)
+
+Once the `urls-api-gateway` is running, you can access the Swagger UI documentation at: http://localhost:3000/api
+
 #### Running Tests
 
 **Unit Tests:**
