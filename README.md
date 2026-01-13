@@ -23,9 +23,9 @@ Start the required infrastructure (MongoDB, Kafka, Kafka UI) using Docker Compos
 docker-compose up -d
 ```
 
-- **Kafka UI**: http://localhost:8080
-- **MongoDB**: localhost:27017
-- **Kafka**: localhost:9092
+- **Kafka UI**: http://<server_address>:8080
+- **MongoDB**: <server_address>:27017
+- **Kafka**: <server_address>:9092
 
 ### 2. Backend Setup
 
@@ -45,8 +45,8 @@ Configure Environment Variables:
 Create a `.env` file in the `backend` directory based on `.env.sample`.
 Example `.env`:
 ```env
-MONGODB_URI=mongodb://localhost:27017/guards
-KAFKA_BROKERS=localhost:9092
+MONGODB_URI=mongodb://<server_address>:27017/guards
+KAFKA_BROKERS=<server_address>:9092
 PORT=3000
 URL_FETCHER_CONSUMER_GROUP=url-fetcher-consumer
 ```
@@ -83,7 +83,7 @@ npm run start:prod url-fetcher
 
 #### API Documentation (Swagger)
 
-Once the `urls-api-gateway` is running, you can access the Swagger UI documentation at: http://localhost:3000/api
+Once the `urls-api-gateway` is running, you can access the Swagger UI documentation at: http://<server_address>:3000/api
 
 #### Running Tests
 
@@ -113,7 +113,7 @@ Configure Environment Variables:
 Create a `.env` file in the `frontend` directory (or `.env.development`).
 Example `.env`:
 ```env
-VITE_URL_GATEWAY_URL=http://localhost:3000/url
+VITE_URL_GATEWAY_URL=http://<server_address>:3000/url
 ```
 
 #### Running the Frontend
@@ -122,7 +122,7 @@ VITE_URL_GATEWAY_URL=http://localhost:3000/url
 ```bash
 npm run dev
 ```
-The application will be available at http://localhost:5173 (or the port shown in the terminal).
+The application will be available at http://<server_address>:5173 (or the port shown in the terminal).
 
 **Build for Production:**
 ```bash
