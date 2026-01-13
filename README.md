@@ -10,6 +10,10 @@ This project is a full-stack application consisting of a NestJS backend (monorep
   - `libs`: Shared libraries for configuration, database, messaging, and schemas.
 - **frontend**: React application built with Vite.
 
+Here is an example of the view:
+![Submit URLs](assets/submit-urls.png)
+![Submitted URLs List](assets/submitted-urls-list.png)
+
 ## Getting Started
 
 ### 1. External Services
